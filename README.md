@@ -1,9 +1,22 @@
-<h1 align="center">
+# FreeDotnetImageSharp
 
-<img src="https://github.com/SixLabors/Branding/raw/main/icons/imagesharp/sixlabors.imagesharp.svg?sanitize=true" alt="SixLabors.ImageSharp" width="256"/>
-<br/>
-SixLabors.ImageSharp
-</h1>
+[![License: Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+
+**FreeDotnetImageSharp is a community-maintained fork of [SixLabors.ImageSharp](https://github.com/SixLabors/ImageSharp) 2.1.13, the last release line published under the Apache License 2.0.** It exists to ship security fixes for the 2.1.x API while staying under Apache-2.0. It is used by [FreeDotnetPOI](https://github.com/rickygzz/FreeDotnetPOI).
+
+The assembly name (`SixLabors.ImageSharp`), strong-name identity (version 2.0.0.0) and namespaces are unchanged, so it is a drop-in replacement for `SixLabors.ImageSharp` 2.1.x:
+
+```
+dotnet add package FreeDotnetImageSharp
+```
+
+Do not reference both `FreeDotnetImageSharp` and `SixLabors.ImageSharp` in the same project.
+
+This project is not affiliated with or endorsed by Six Labors. All credit for the original work goes to Six Labors and the ImageSharp contributors. Security fixes here are independent implementations; no code from ImageSharp 3.x or later (Six Labors Split License) is included. See [NOTICE](NOTICE).
+
+The original ImageSharp README follows.
+
+---
 
 <div align="center">
 

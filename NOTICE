@@ -1,0 +1,18 @@
+FreeDotnetImageSharp
+Copyright FreeDotnetImageSharp contributors
+
+This product is a fork of SixLabors.ImageSharp (https://github.com/SixLabors/ImageSharp),
+taken at tag v2.1.13 (commit 2c3967b22), which was licensed under the
+Apache License, Version 2.0. Copyright (c) Six Labors.
+
+The shared-infrastructure directory is vendored from
+https://github.com/SixLabors/SharedInfrastructure at commit 59ce17f,
+licensed under the Apache License, Version 2.0. Copyright (c) Six Labors.
+
+Security fixes in this fork are independent implementations written for this
+Apache-2.0 codebase. No code from SixLabors.ImageSharp 3.x or later (which use
+the Six Labors Split License) has been copied into this repository.
+
+FreeDotnetImageSharp is not affiliated with or endorsed by Six Labors.
+ImageSharp is a trademark of Six Labors. See THIRD-PARTY-NOTICES.TXT for
+third-party components.

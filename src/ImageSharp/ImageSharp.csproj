@@ -5,19 +5,23 @@
     <AssemblyName>SixLabors.ImageSharp</AssemblyName>
     <AssemblyTitle>SixLabors.ImageSharp</AssemblyTitle>
     <RootNamespace>SixLabors.ImageSharp</RootNamespace>
-    <PackageId>SixLabors.ImageSharp</PackageId>
-    <PackageIcon>sixlabors.imagesharp.128.png</PackageIcon>
+    <PackageId>FreeDotnetImageSharp</PackageId>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <RepositoryUrl Condition="'$(RepositoryUrl)' == ''">https://github.com/SixLabors/ImageSharp/</RepositoryUrl>
+    <RepositoryUrl>https://github.com/rickygzz/FreeDotnetImageSharp</RepositoryUrl>
     <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
     <PackageTags>Image Resize Crop Gif Jpg Jpeg Bitmap Pbm Png Tga Tiff WebP NetCore</PackageTags>
-    <Description>A new, fully featured, fully managed, cross-platform, 2D graphics API for .NET</Description>
+    <Description>Community-maintained, Apache-2.0 licensed fork of SixLabors.ImageSharp 2.1.13 with security fixes. Assembly name and namespaces are unchanged (drop-in replacement for SixLabors.ImageSharp 2.1.x). Not affiliated with or endorsed by Six Labors.</Description>
     <Configurations>Debug;Release;Debug-InnerLoop;Release-InnerLoop</Configurations>
   </PropertyGroup>
 
   <PropertyGroup>
     <!--Bump to V2 prior to tagged release.-->
     <MinVerMinimumMajorMinor>2.0</MinVerMinimumMajorMinor>
+    <!-- FreeDotnetImageSharp: fixed versions. AssemblyVersion stays 2.0.0.0 to match SixLabors.ImageSharp 2.x for binary compatibility. -->
+    <MinVerSkip>true</MinVerSkip>
+    <Version>2.1.14</Version>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.1.14.0</FileVersion>
   </PropertyGroup>
 
   <Choose>
@@ -44,7 +48,8 @@
   </Choose>
 
   <ItemGroup>
-    <None Include="..\..\shared-infrastructure\branding\icons\imagesharp\sixlabors.imagesharp.128.png" Pack="true" PackagePath="" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="" Visible="false" />
+    <None Include="..\..\NOTICE" Pack="true" PackagePath="" Visible="false" />
   </ItemGroup>
 
   <ItemGroup>
