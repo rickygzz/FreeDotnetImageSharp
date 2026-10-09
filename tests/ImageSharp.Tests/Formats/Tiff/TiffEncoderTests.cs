@@ -464,5 +464,61 @@ namespace SixLabors.ImageSharp.Tests.Formats.Tiff
             var encoder = new TiffEncoder { PhotometricInterpretation = photometricInterpretation };
             image.DebugSave(provider, encoder);
         }
+
+        // GHSA-j9gm-c75j-xc9q (T4) and GHSA-jjfr-hcj7-qf5w (T6): the encoded CCITT data can be larger than
+        // the working buffer, for example for narrow images where the per row codes dominate.
+        [Theory]
+        [InlineData(TiffCompression.CcittGroup3Fax, 1, 2000)]
+        [InlineData(TiffCompression.CcittGroup3Fax, 2, 1)]
+        [InlineData(TiffCompression.CcittGroup3Fax, 64, 2000)]
+        [InlineData(TiffCompression.CcittGroup4Fax, 1, 1)]
+        [InlineData(TiffCompression.CcittGroup4Fax, 1, 2000)]
+        [InlineData(TiffCompression.CcittGroup4Fax, 3, 7)]
+        [InlineData(TiffCompression.Ccitt1D, 1, 2000)]
+        [InlineData(TiffCompression.Ccitt1D, 5, 1)]
+        public void TiffEncoder_Ccitt_EncodedDataLargerThanBuffer_RoundTrips(TiffCompression compression, int width, int height)
+        {
+            using var image = new Image<L8>(width, height);
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    image[x, y] = new L8((byte)(((x + y) & 1) == 0 ? 255 : 0));
+                }
+            }
+
+            using var memStream = new MemoryStream();
+            image.Save(memStream, new TiffEncoder { BitsPerPixel = TiffBitsPerPixel.Bit1, Compression = compression });
+
+            memStream.Position = 0;
+            using var decoded = Image.Load<L8>(memStream);
+            Assert.Equal(width, decoded.Width);
+            Assert.Equal(height, decoded.Height);
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    Assert.Equal(image[x, y], decoded[x, y]);
+                }
+            }
+        }
+
+        // GHSA-jjfr-hcj7-qf5w: a 1x1 Group 4 TIFF re-encoded with the metadata it was decoded with.
+        [Fact]
+        public void TiffEncoder_ReEncodeSinglePixelCcittGroup4_Works()
+        {
+            byte[] input = System.Convert.FromBase64String(
+                "SUkqAAgAAAAJAAABAwABAAAAAQAAAAEBAwABAAAAAQAAAAIBAwABAAAAAQAAAAMBAwABAAAABAAAAAYBAwABAAAAAAAAABEBBAABAAAAegAAABUBAwABAAAAAQAAABYBBAABAAAAAQAAABcBBAABAAAABAAAAAAAAACACACA");
+
+            using Image image = Image.Load(input);
+            using var memStream = new MemoryStream();
+            image.Save(memStream, new TiffEncoder());
+
+            memStream.Position = 0;
+            using Image decoded = Image.Load(memStream);
+            Assert.Equal(1, decoded.Width);
+            Assert.Equal(1, decoded.Height);
+            Assert.Equal(TiffCompression.CcittGroup4Fax, decoded.Frames.RootFrame.Metadata.GetTiffMetadata().Compression);
+        }
     }
 }

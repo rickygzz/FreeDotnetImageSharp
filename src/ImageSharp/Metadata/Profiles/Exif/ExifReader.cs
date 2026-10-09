@@ -185,6 +185,12 @@ namespace SixLabors.ImageSharp.Metadata.Profiles.Exif
             Span<byte> offsetBuffer = stackalloc byte[4];
             for (int i = 0; i < count; i++)
             {
+                // Stop at truncated data: ReadValue does not advance when a full entry is not available.
+                if ((this.data.Length - this.data.Position) < 12)
+                {
+                    break;
+                }
+
                 this.ReadValue(values, offsetBuffer);
             }
         }
@@ -202,7 +208,11 @@ namespace SixLabors.ImageSharp.Metadata.Profiles.Exif
 
         protected void ReadValues64(List<IExifValue> values, ulong offset)
         {
-            DebugGuard.MustBeLessThanOrEqualTo(offset, (ulong)this.data.Length, "By spec UInt64.MaxValue is supported, but .NET Stream.Length can Int64.MaxValue.");
+            // By spec UInt64.MaxValue is supported, but .NET Stream.Length can only be Int64.MaxValue.
+            if (offset > (ulong)this.data.Length)
+            {
+                return;
+            }
 
             this.Seek(offset);
             ulong count = this.ReadUInt64();
@@ -210,6 +220,14 @@ namespace SixLabors.ImageSharp.Metadata.Profiles.Exif
             Span<byte> offsetBuffer = stackalloc byte[8];
             for (ulong i = 0; i < count; i++)
             {
+                // The entry count is untrusted and 64-bit. Stop at truncated data, because ReadValue64
+                // does not advance when a full entry is not available, which would otherwise loop for
+                // up to 2^64 iterations without consuming input.
+                if ((this.data.Length - this.data.Position) < 20)
+                {
+                    break;
+                }
+
                 this.ReadValue64(values, offsetBuffer);
             }
         }

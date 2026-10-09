@@ -469,6 +469,13 @@ namespace SixLabors.ImageSharp.Formats.Tiff.Compression.Compressors
         {
             while (codeLength > 0)
             {
+                // The encoded output can be larger than the buffer (e.g. narrow images, where EOL codes
+                // dominate). Flush completed bytes to the output stream instead of writing past the buffer.
+                if (this.bytePosition >= compressedData.Length)
+                {
+                    this.FlushCompressedData(compressedData);
+                }
+
                 int bitNumber = (int)codeLength;
                 bool bit = (code & (1 << (bitNumber - 1))) != 0;
                 if (bit)
@@ -510,8 +517,28 @@ namespace SixLabors.ImageSharp.Formats.Tiff.Compression.Compressors
             this.CompressStrip(pixelsAsGray, height, compressedData);
 
             // Write the compressed data to the stream.
+            if (this.bytePosition >= compressedData.Length)
+            {
+                this.FlushCompressedData(compressedData);
+            }
+
             int bytesToWrite = this.bitPosition != 0 ? this.bytePosition + 1 : this.bytePosition;
             this.Output.Write(compressedData.Slice(0, bytesToWrite));
+        }
+
+        /// <summary>
+        /// Writes all completed bytes of the buffer to the output stream and resets the write position.
+        /// </summary>
+        /// <param name="compressedData">The buffer holding the compressed data.</param>
+        private void FlushCompressedData(Span<byte> compressedData)
+        {
+            // bytePosition only advances when a byte is complete or padded, so there are no pending bits here.
+            DebugGuard.IsTrue(this.bitPosition == 0, nameof(this.bitPosition), "Flushing requires a byte boundary");
+
+            int bytesToWrite = Math.Min(this.bytePosition, compressedData.Length);
+            this.Output.Write(compressedData.Slice(0, bytesToWrite));
+            compressedData.Clear();
+            this.bytePosition -= bytesToWrite;
         }
 
         /// <summary>
@@ -528,9 +555,10 @@ namespace SixLabors.ImageSharp.Formats.Tiff.Compression.Compressors
         /// <inheritdoc/>
         public override void Initialize(int rowsPerStrip)
         {
-            // This is too much memory allocated, but just 1 bit per pixel will not do, if the compression rate is not good.
-            int maxNeededBytes = this.Width * rowsPerStrip;
-            this.compressedDataBuffer = this.Allocator.Allocate<byte>(maxNeededBytes);
+            // This is a working buffer only: WriteCode flushes it to the output stream when it is full,
+            // so the encoded size of a strip is not limited by this allocation.
+            int bufferSize = Math.Max(this.Width * rowsPerStrip, 64);
+            this.compressedDataBuffer = this.Allocator.Allocate<byte>(bufferSize);
         }
     }
 }

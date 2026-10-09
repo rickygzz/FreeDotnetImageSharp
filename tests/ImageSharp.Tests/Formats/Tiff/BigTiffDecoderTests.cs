@@ -126,5 +126,31 @@ namespace SixLabors.ImageSharp.Tests.Formats.Tiff
             Assert.Equal(1, meta.Values.Count(v => (ushort)v.Tag == (ushort)ExifTagValue.StripOffsets));
             Assert.Equal(1, meta.Values.Count(v => (ushort)v.Tag == (ushort)ExifTagValue.StripByteCounts));
         }
+
+        // GHSA-wmxv-xphr-5c9g: the 64-bit IFD entry count is untrusted. Truncated entry data must end
+        // the IFD instead of looping once per declared entry without consuming input.
+        [Theory]
+        [InlineData(1UL)]
+        [InlineData(5_000_000_000UL)]
+        [InlineData(ulong.MaxValue)]
+        public void BigTiff_HugeIfdEntryCountWithTruncatedData_IsRejectedQuickly(ulong entryCount)
+        {
+            byte[] data = new byte[24];
+            data[0] = 0x49; // II
+            data[1] = 0x49;
+            data[2] = 0x2B; // BigTIFF
+            data[4] = 0x08; // Offset size
+            BitConverter.GetBytes(16UL).CopyTo(data, 8);
+            BitConverter.GetBytes(entryCount).CopyTo(data, 16);
+
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            Assert.ThrowsAny<Exception>(() =>
+            {
+                using var stream = new MemoryStream(data);
+                using Image image = Image.Load(stream);
+            });
+
+            Assert.True(stopwatch.Elapsed < TimeSpan.FromSeconds(5), $"Decoding took {stopwatch.Elapsed}");
+        }
     }
 }

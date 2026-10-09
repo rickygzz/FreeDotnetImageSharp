@@ -78,13 +78,7 @@ namespace SixLabors.ImageSharp.Metadata.Profiles.Icc
         public IccClut ReadClut8(int inChannelCount, int outChannelCount, byte[] gridPointCount)
         {
             int start = this.currentIndex;
-            int length = 0;
-            for (int i = 0; i < inChannelCount; i++)
-            {
-                length += (int)Math.Pow(gridPointCount[i], inChannelCount);
-            }
-
-            length /= inChannelCount;
+            int length = this.GetClutEntryCount(inChannelCount, outChannelCount, gridPointCount, 1);
 
             const float Max = byte.MaxValue;
 
@@ -112,13 +106,7 @@ namespace SixLabors.ImageSharp.Metadata.Profiles.Icc
         public IccClut ReadClut16(int inChannelCount, int outChannelCount, byte[] gridPointCount)
         {
             int start = this.currentIndex;
-            int length = 0;
-            for (int i = 0; i < inChannelCount; i++)
-            {
-                length += (int)Math.Pow(gridPointCount[i], inChannelCount);
-            }
-
-            length /= inChannelCount;
+            int length = this.GetClutEntryCount(inChannelCount, outChannelCount, gridPointCount, 2);
 
             const float Max = ushort.MaxValue;
 
@@ -146,13 +134,7 @@ namespace SixLabors.ImageSharp.Metadata.Profiles.Icc
         public IccClut ReadClutF32(int inChCount, int outChCount, byte[] gridPointCount)
         {
             int start = this.currentIndex;
-            int length = 0;
-            for (int i = 0; i < inChCount; i++)
-            {
-                length += (int)Math.Pow(gridPointCount[i], inChCount);
-            }
-
-            length /= inChCount;
+            int length = this.GetClutEntryCount(inChCount, outChCount, gridPointCount, 4);
 
             var values = new float[length][];
             for (int i = 0; i < length; i++)
@@ -166,6 +148,49 @@ namespace SixLabors.ImageSharp.Metadata.Profiles.Icc
 
             this.currentIndex = start + (length * outChCount * 4);
             return new IccClut(values, gridPointCount, IccClutDataType.Float);
+        }
+
+        /// <summary>
+        /// Calculates the number of CLUT entries and verifies that the profile contains
+        /// the data for all of them before anything is allocated.
+        /// </summary>
+        /// <param name="inChannelCount">Input channel count</param>
+        /// <param name="outChannelCount">Output channel count</param>
+        /// <param name="gridPointCount">Grid point count for each CLUT channel</param>
+        /// <param name="bytesPerValue">The size of one stored CLUT value in bytes</param>
+        /// <returns>The number of CLUT entries</returns>
+        private int GetClutEntryCount(int inChannelCount, int outChannelCount, byte[] gridPointCount, int bytesPerValue)
+        {
+            // The CLUT grid point array is 16 bytes long, so at most 16 input channels can be described.
+            if (inChannelCount < 1 || inChannelCount > 16 || inChannelCount > gridPointCount.Length)
+            {
+                throw new InvalidIccProfileException($"Invalid CLUT input channel count of {inChannelCount}");
+            }
+
+            if (outChannelCount < 1)
+            {
+                throw new InvalidIccProfileException($"Invalid CLUT output channel count of {outChannelCount}");
+            }
+
+            // Computed in double precision so that untrusted grid sizes cannot overflow the calculation.
+            double sum = 0;
+            for (int i = 0; i < inChannelCount; i++)
+            {
+                sum += Math.Pow(gridPointCount[i], inChannelCount);
+            }
+
+            double length = Math.Floor(sum / inChannelCount);
+
+            // Untrusted dimensions must not cause allocations larger than the data that is actually present.
+            double requiredBytes = length * outChannelCount * bytesPerValue;
+            int remainingBytes = this.data.Length - this.currentIndex;
+            if (requiredBytes > remainingBytes)
+            {
+                throw new InvalidIccProfileException(
+                    $"CLUT requires {requiredBytes} bytes of data, but only {remainingBytes} bytes are available");
+            }
+
+            return (int)length;
         }
     }
 }

@@ -201,5 +201,45 @@ namespace SixLabors.ImageSharp.Tests.Processing.Normalization
 
             ValidatorComparer.VerifySimilarity(referenceResult, processed);
         }
+
+        // GHSA-j3p4-wp97-rph4: pixel formats that can hold values outside [0, 1] (including NaN and infinity)
+        // must not produce an out-of-range histogram index.
+        [Theory]
+        [InlineData(HistogramEqualizationMethod.Global, 256)]
+        [InlineData(HistogramEqualizationMethod.Global, 65536)]
+        [InlineData(HistogramEqualizationMethod.AdaptiveSlidingWindow, 256)]
+        [InlineData(HistogramEqualizationMethod.AdaptiveTileInterpolation, 256)]
+        public void HistogramEqualization_OutOfRangePixelValues_DoesNotThrow(HistogramEqualizationMethod method, int luminanceLevels)
+        {
+            float[] values = { float.NaN, float.PositiveInfinity, float.NegativeInfinity, -5F, 7F, 0.5F, 1F, 0F };
+            using var image = new Image<RgbaVector>(8, 8);
+            for (int i = 0; i < 64; i++)
+            {
+                image[i % 8, i / 8] = new RgbaVector(values[i % 8], values[(i + 3) % 8], values[(i + 5) % 8], 1);
+            }
+
+            var options = new HistogramEqualizationOptions
+            {
+                Method = method,
+                LuminanceLevels = luminanceLevels,
+                NumberOfTiles = 2
+            };
+
+            image.Mutate(x => x.HistogramEqualization(options));
+        }
+
+        [Theory]
+        [InlineData(float.NaN, 0)]
+        [InlineData(float.NegativeInfinity, 0)]
+        [InlineData(-1F, 0)]
+        [InlineData(0F, 0)]
+        [InlineData(1F, 255)]
+        [InlineData(2F, 255)]
+        [InlineData(float.PositiveInfinity, 255)]
+        public void GetBT709Luminance_IsClampedToLuminanceLevels(float value, int expected)
+        {
+            var vector = new System.Numerics.Vector4(value, value, value, 1F);
+            Assert.Equal(expected, ColorNumerics.GetBT709Luminance(ref vector, 256));
+        }
     }
 }

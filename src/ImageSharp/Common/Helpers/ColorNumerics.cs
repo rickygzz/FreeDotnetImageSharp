@@ -27,9 +27,27 @@ namespace SixLabors.ImageSharp
         /// <param name="luminanceLevels">
         /// The number of luminance levels (256 for 8 bit, 65536 for 16 bit grayscale images).
         /// </param>
+        /// <returns>The luminance, always in the range [0, <paramref name="luminanceLevels"/> - 1].</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetBT709Luminance(ref Vector4 vector, int luminanceLevels)
-            => (int)MathF.Round(Vector4.Dot(vector, Bt709) * (luminanceLevels - 1));
+        {
+            int maxLevel = luminanceLevels - 1;
+            float luminance = Vector4.Dot(vector, Bt709) * maxLevel;
+
+            // The result is used as a histogram index. Pixel formats that can hold values outside [0, 1]
+            // (including NaN and infinity) must not produce an out-of-range index.
+            if (!(luminance > 0F))
+            {
+                return 0;
+            }
+
+            if (luminance >= maxLevel)
+            {
+                return maxLevel;
+            }
+
+            return (int)MathF.Round(luminance);
+        }
 
         /// <summary>
         /// Gets the luminance from the rgb components using the formula
