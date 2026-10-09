@@ -349,6 +349,9 @@ namespace SixLabors.ImageSharp.Tests.TestUtilities
 
         internal static Dictionary<HwIntrinsics, string> ToFeatureKeyValueCollection(this HwIntrinsics intrinsics)
         {
+            // The child process runs on the same runtime as the test process.
+            int runtimeMajorVersion = Environment.Version.Major;
+
             // Loop through and translate the given values into COMPlus equivaluents
             var features = new Dictionary<HwIntrinsics, string>();
             foreach (string intrinsic in intrinsics.ToString("G").Split(SplitChars, StringSplitOptions.RemoveEmptyEntries))
@@ -357,7 +360,8 @@ namespace SixLabors.ImageSharp.Tests.TestUtilities
                 switch (intrinsic)
                 {
                     case nameof(HwIntrinsics.DisableSIMD):
-                        features.Add(key, "FeatureSIMD");
+                        // FeatureSIMD was removed in .NET 8; EnableHWIntrinsic=0 also disables Vector<T> acceleration.
+                        features.Add(key, runtimeMajorVersion >= 8 ? "EnableHWIntrinsic" : "FeatureSIMD");
                         break;
 
                     case nameof(HwIntrinsics.AllowAll):
@@ -367,12 +371,48 @@ namespace SixLabors.ImageSharp.Tests.TestUtilities
                         break;
 
                     default:
-                        features.Add(key, intrinsic.Replace("Disable", "Enable"));
+                        features.Add(key, runtimeMajorVersion >= 10 ? GetNet10FeatureKey(intrinsic) : intrinsic.Replace("Disable", "Enable"));
                         break;
                 }
             }
 
             return features;
+        }
+
+        /// <summary>
+        /// .NET 10 groups the x86 ISA configuration knobs, and most individual knobs are ignored.
+        /// Map each feature to the knob that disables it (which may also disable related features).
+        /// </summary>
+        private static string GetNet10FeatureKey(string intrinsic)
+        {
+            switch (intrinsic)
+            {
+                // SSE and SSE2 are the baseline and can only be disabled together with all intrinsics.
+                case nameof(HwIntrinsics.DisableSSE):
+                case nameof(HwIntrinsics.DisableSSE2):
+                    return "EnableHWIntrinsic";
+
+                // x86-64-v2 group.
+                case nameof(HwIntrinsics.DisableSSE3):
+                case nameof(HwIntrinsics.DisableSSSE3):
+                case nameof(HwIntrinsics.DisableSSE41):
+                case nameof(HwIntrinsics.DisableSSE42):
+                case nameof(HwIntrinsics.DisablePOPCNT):
+                    return "EnableSSE42";
+
+                // x86-64-v3 group.
+                case nameof(HwIntrinsics.DisableFMA):
+                case nameof(HwIntrinsics.DisableBMI1):
+                case nameof(HwIntrinsics.DisableBMI2):
+                case nameof(HwIntrinsics.DisableLZCNT):
+                    return "EnableAVX2";
+
+                case nameof(HwIntrinsics.DisablePCLMULQDQ):
+                    return "EnableAES";
+
+                default:
+                    return intrinsic.Replace("Disable", "Enable");
+            }
         }
     }
 

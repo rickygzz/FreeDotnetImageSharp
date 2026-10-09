@@ -18,6 +18,11 @@
 
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\ImageSharp.Tests.ruleset</CodeAnalysisRuleSet>
+    <!--
+      Test projects were written for and always compiled with C# 10.0. Newer versions change overload
+      resolution for spans (C# 14), which breaks existing test code. The library stays on the shared default (9.0).
+    -->
+    <LangVersion>10.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

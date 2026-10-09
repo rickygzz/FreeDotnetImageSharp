@@ -17,7 +17,7 @@ FreeDotnetImageSharp is a community-maintained fork of SixLabors.ImageSharp 2.1.
 
 ```
 dotnet build -c Release
-dotnet test tests/ImageSharp.Tests/ImageSharp.Tests.csproj -c Release -f net6.0 -p:FREEDOTNET_TESTING_PREVIEW=true
+dotnet test tests/ImageSharp.Tests/ImageSharp.Tests.csproj -c Release -f net10.0
 ```
 
 The test images are stored in Git LFS. Run `git lfs pull` after cloning.

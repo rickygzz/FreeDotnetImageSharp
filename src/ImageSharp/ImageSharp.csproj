@@ -25,28 +25,10 @@
     <FileVersion>2.1.14.0</FileVersion>
   </PropertyGroup>
 
-  <Choose>
-    <When Condition="$(FREEDOTNET_TESTING_PREVIEW) == true">
-      <PropertyGroup>
-        <TargetFrameworks>net6.0;net5.0;netcoreapp3.1;netcoreapp2.1;netstandard2.1;netstandard2.0;net472</TargetFrameworks>
-      </PropertyGroup>
-    </When>
-    <When Condition="$(FREEDOTNET_TESTING) == true">
-      <PropertyGroup>
-        <TargetFrameworks>net5.0;netcoreapp3.1;netcoreapp2.1;netstandard2.1;netstandard2.0;net472</TargetFrameworks>
-      </PropertyGroup>
-    </When>
-    <When Condition="$(Configuration.EndsWith('InnerLoop')) == true">
-      <PropertyGroup>
-        <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
-      </PropertyGroup>
-    </When>
-    <Otherwise>
-      <PropertyGroup>
-        <TargetFrameworks>netcoreapp3.1;netcoreapp2.1;netstandard2.1;netstandard2.0;net472</TargetFrameworks>
-      </PropertyGroup>
-    </Otherwise>
-  </Choose>
+  <PropertyGroup>
+    <!-- The published package's targets. .NET 5-10 apps use the netcoreapp3.1 build. -->
+    <TargetFrameworks>netcoreapp3.1;netcoreapp2.1;netstandard2.1;netstandard2.0;net472</TargetFrameworks>
+  </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\..\LICENSE" Pack="true" PackagePath="" Visible="false" />

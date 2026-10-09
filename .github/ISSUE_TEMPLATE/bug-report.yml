@@ -16,7 +16,7 @@ body:
   - type: input
     attributes:
       label: Target framework and operating system
-      placeholder: e.g. net8.0 on Windows 11 x64
+      placeholder: e.g. net10.0 on Windows 11 x64
     validations:
       required: true
   - type: textarea

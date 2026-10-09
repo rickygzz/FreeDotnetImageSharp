@@ -19,7 +19,8 @@ namespace SixLabors.ImageSharp.Tests.TestUtilities.Tests
             new TheoryData<HwIntrinsics, string[]>
             {
                 { HwIntrinsics.DisableAES | HwIntrinsics.AllowAll, new string[] { "EnableAES", "AllowAll" } },
-                { HwIntrinsics.DisableSIMD | HwIntrinsics.DisableHWIntrinsic, new string[] { "FeatureSIMD", "EnableHWIntrinsic" } },
+                // FeatureSIMD was removed in .NET 8; the runner maps DisableSIMD to EnableHWIntrinsic there.
+                { HwIntrinsics.DisableSIMD | HwIntrinsics.DisableHWIntrinsic, new string[] { Environment.Version.Major >= 8 ? "EnableHWIntrinsic" : "FeatureSIMD", "EnableHWIntrinsic" } },
                 { HwIntrinsics.DisableSSE42 | HwIntrinsics.DisableAVX, new string[] { "EnableSSE42", "EnableAVX" } }
             };
 
