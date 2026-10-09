@@ -34,7 +34,7 @@ jobs:
           git config --global core.longpaths true
 
       - name: Git Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # The test images are stored in Git LFS. Cache them to limit LFS bandwidth usage.
       - name: Git Create LFS FileList
@@ -83,7 +83,7 @@ jobs:
 
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: DotNet Setup
         uses: actions/setup-dotnet@v4
