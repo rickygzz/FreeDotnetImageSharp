@@ -21,6 +21,7 @@ Do not reference both `FreeDotnetImageSharp` and `SixLabors.ImageSharp` in the s
 | 2.1.14 | [GHSA-j3p4-wp97-rph4](https://github.com/advisories/GHSA-j3p4-wp97-rph4) | HistogramEqualization uses an unchecked luminance as a histogram index |
 | 2.1.14 | [GHSA-gwg2-r3hj-4w44](https://github.com/advisories/GHSA-gwg2-r3hj-4w44) | ICC CLUT parsing allocates from untrusted dimensions |
 | 2.1.14 | [GHSA-wmxv-xphr-5c9g](https://github.com/advisories/GHSA-wmxv-xphr-5c9g) | BigTIFF IFD entry count can cause a non-progressing loop |
+| 2.1.15 | None (found by a FreeDotnetImageSharp audit; same class as [GHSA-gwg2-r3hj-4w44](https://github.com/advisories/GHSA-gwg2-r3hj-4w44)) | ICC profile parsing allocated memory from untrusted counts in 12 more tag types (up to gigabytes from a profile of a few hundred bytes) when reading `IccProfile.Entries` |
 
 This project is not affiliated with or endorsed by Six Labors. All credit for the original work goes to Six Labors and the ImageSharp contributors. Security fixes here are independent implementations; no code from ImageSharp 3.x or later (Six Labors Split License) is included. See [NOTICE](NOTICE).
 

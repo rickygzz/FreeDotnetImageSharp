@@ -56,6 +56,8 @@ namespace SixLabors.ImageSharp.Metadata.Profiles.Icc
             var response = new IccResponseNumber[channelCount][];
             for (int i = 0; i < channelCount; i++)
             {
+                // ReadResponseNumber reads 6 bytes (device code + s15Fixed16 value).
+                this.EnsureDataAvailable(measurement[i], 6, "Response curve");
                 response[i] = new IccResponseNumber[measurement[i]];
                 for (uint j = 0; j < measurement[i]; j++)
                 {
@@ -175,6 +177,7 @@ namespace SixLabors.ImageSharp.Metadata.Profiles.Icc
         public IccSampledCurveElement ReadSampledCurveElement()
         {
             uint count = this.ReadUInt32();
+            this.EnsureDataAvailable(count, 4, "Sampled curve");
             var entries = new float[count];
             for (int i = 0; i < count; i++)
             {

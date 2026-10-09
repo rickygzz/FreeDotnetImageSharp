@@ -56,6 +56,26 @@ namespace SixLabors.ImageSharp.Metadata.Profiles.Icc
         }
 
         /// <summary>
+        /// Verifies that the remaining data can hold the given number of items before anything is allocated for them.
+        /// Counts in a profile are untrusted, so they must not drive allocations larger than the data that is present.
+        /// </summary>
+        /// <param name="count">The number of items declared by the profile.</param>
+        /// <param name="minBytesPerItem">The minimum number of bytes one item occupies in the profile.</param>
+        /// <param name="description">What is being read, for the error message.</param>
+        /// <exception cref="InvalidIccProfileException">The profile does not contain enough data.</exception>
+        private void EnsureDataAvailable(ulong count, double minBytesPerItem, string description)
+        {
+            // Computed in double precision so that large counts cannot overflow the calculation.
+            double required = count * minBytesPerItem;
+            int remaining = Math.Max(this.data.Length - this.currentIndex, 0);
+            if (required > remaining)
+            {
+                throw new InvalidIccProfileException(
+                    $"{description}: {count} entries require at least {required} bytes, but only {remaining} bytes are available");
+            }
+        }
+
+        /// <summary>
         /// Calculates the 4 byte padding and adds it to the <see cref="currentIndex"/> variable
         /// </summary>
         private void AddPadding()

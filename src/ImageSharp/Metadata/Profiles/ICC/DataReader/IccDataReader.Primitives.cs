@@ -165,6 +165,12 @@ namespace SixLabors.ImageSharp.Metadata.Profiles.Icc
         /// <returns>The read bytes</returns>
         public byte[] ReadBytes(int count)
         {
+            if (count < 0)
+            {
+                throw new InvalidIccProfileException($"Invalid byte count of {count}");
+            }
+
+            this.EnsureDataAvailable((ulong)count, 1, "Byte array");
             var bytes = new byte[count];
             Buffer.BlockCopy(this.data, this.AddIndex(count), bytes, 0, count);
             return bytes;
