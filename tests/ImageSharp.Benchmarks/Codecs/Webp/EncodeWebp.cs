@@ -54,9 +54,6 @@ namespace SixLabors.ImageSharp.Benchmarks.Codecs
                 FilterStrength = 60,
                 SnsStrength = 50,
                 Pass = 1,
-
-                // 100 means off.
-                NearLossless = 100
             };
 
             this.webpMagick.Quality = 75;
@@ -86,9 +83,6 @@ namespace SixLabors.ImageSharp.Benchmarks.Codecs
             {
                 Lossless = true,
                 Method = 4,
-
-                // 100 means off.
-                NearLossless = 100
             };
 
             this.webpMagick.Quality = 75;

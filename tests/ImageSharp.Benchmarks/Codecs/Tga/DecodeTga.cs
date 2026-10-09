@@ -34,7 +34,7 @@ namespace SixLabors.ImageSharp.Benchmarks.Codecs
         {
             var settings = new MagickReadSettings { Format = MagickFormat.Tga };
             using var image = new MagickImage(new MemoryStream(this.data), settings);
-            return image.Width;
+            return (int)image.Width;
         }
 
         [Benchmark(Description = "ImageSharp Tga")]

@@ -23,6 +23,13 @@
       resolution for spans (C# 14), which breaks existing test code. The library stays on the shared default (9.0).
     -->
     <LangVersion>10.0</LangVersion>
+    <!--
+      xunit 2.9 analyzers that flag patterns this suite has always used and that xunit handles at run time:
+      xUnit1039 - theory data typed as object feeding generic TPixel parameters;
+      xUnit3001 - TestImageProvider implements IXunitSerializable without a public parameterless constructor.
+      The test counts are unchanged from xunit 2.4.1, so no tests are lost.
+    -->
+    <NoWarn>$(NoWarn);xUnit1039;xUnit3001</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

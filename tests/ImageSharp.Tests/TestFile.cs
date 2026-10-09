@@ -144,7 +144,10 @@ namespace SixLabors.ImageSharp.Tests
         /// </returns>
         public Image<Rgba32> CreateRgba32Image(IImageDecoder decoder)
         {
-            return ImageSharp.Image.Load<Rgba32>(this.Image.GetConfiguration(), this.Bytes, decoder);
+            // The cached image is loaded with Configuration.Default, so use it directly. Accessing this.Image here
+            // would decode and cache the file as a side effect, and memory-validated tests would count that cached
+            // (never disposed) image as a leak if they happen to be the first to touch the file.
+            return ImageSharp.Image.Load<Rgba32>(Configuration.Default, this.Bytes, decoder);
         }
     }
 }

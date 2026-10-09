@@ -248,10 +248,10 @@ namespace SixLabors.ImageSharp.Benchmarks.LoadResizeSave
         public void MagickResize(string input)
         {
             using var image = new MagickImage(input);
-            this.LogImageProcessed(image.Width, image.Height);
+            this.LogImageProcessed((int)image.Width, (int)image.Height);
 
             // Resize it to fit a 150x150 square
-            image.Resize(this.ThumbnailSize, this.ThumbnailSize);
+            image.Resize((uint)this.ThumbnailSize, (uint)this.ThumbnailSize);
 
             // Reduce the size of the file
             image.Strip();

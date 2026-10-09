@@ -206,7 +206,7 @@ namespace SixLabors.ImageSharp.Tests.Formats.Png
                     TestPngEncoderCore(
                     provider,
                     pngColorType,
-                    (PngFilterMethod)filterMethod[0],
+                    filterMethod,
                     pngBitDepth,
                     interlaceMode,
                     appendPngColorType: true,
@@ -242,7 +242,7 @@ namespace SixLabors.ImageSharp.Tests.Formats.Png
                     TestPngEncoderCore(
                     provider,
                     pngColorType,
-                    (PngFilterMethod)filterMethod[0],
+                    filterMethod,
                     pngBitDepth,
                     interlaceMode,
                     appendPngColorType: true,

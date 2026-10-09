@@ -273,6 +273,9 @@ namespace SixLabors.ImageSharp.Tests.Formats.Tga
             }
         }
 
+        // FreeDotnetImageSharp: Magick.NET 14 decodes this file (8-bit indices into a 16-bit palette, RLE) with wrong
+        // colors (e.g. white instead of red), so it is compared to a stored reference image instead. The reference is
+        // ImageSharp's output, verified to be pixel-identical to Magick.NET 11.1.2, which this test used before.
         [Theory]
         [WithFile(Bit16PalRle, PixelTypes.Rgba32)]
         public void TgaDecoder_CanDecode_RunLengthEncoded_WithPalette_16Bit<TPixel>(TestImageProvider<TPixel> provider)
@@ -281,7 +284,7 @@ namespace SixLabors.ImageSharp.Tests.Formats.Tga
             using (Image<TPixel> image = provider.GetImage(TgaDecoder))
             {
                 image.DebugSave(provider);
-                ImageComparingUtils.CompareWithReferenceDecoder(provider, image);
+                image.CompareToReferenceOutput(provider);
             }
         }
 
