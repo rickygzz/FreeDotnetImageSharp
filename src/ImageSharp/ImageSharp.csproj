@@ -7,6 +7,7 @@
     <RootNamespace>SixLabors.ImageSharp</RootNamespace>
     <PackageId>FreeDotnetImageSharp</PackageId>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/rickygzz/FreeDotnetImageSharp</RepositoryUrl>
     <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
     <PackageTags>Image Resize Crop Gif Jpg Jpeg Bitmap Pbm Png Tga Tiff WebP NetCore</PackageTags>
@@ -50,6 +51,7 @@
   <ItemGroup>
     <None Include="..\..\LICENSE" Pack="true" PackagePath="" Visible="false" />
     <None Include="..\..\NOTICE" Pack="true" PackagePath="" Visible="false" />
+    <None Include="PackageReadme.md" Pack="true" PackagePath="README.md" />
   </ItemGroup>
 
   <ItemGroup>
