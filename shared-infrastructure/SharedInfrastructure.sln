@@ -12,28 +12,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_root", "_root", "{27502888
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		ci-build.ps1 = ci-build.ps1
-		ci-test.ps1 = ci-test.ps1
-		codecov.yml = codecov.yml
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
 		LICENSE = LICENSE
 		README.md = README.md
-		sixlabors.ruleset = sixlabors.ruleset
+		freedotnet.ruleset = freedotnet.ruleset
 		SixLabors.snk = SixLabors.snk
-		sixlabors.tests.ruleset = sixlabors.tests.ruleset
+		freedotnet.tests.ruleset = freedotnet.tests.ruleset
 		stylecop.json = stylecop.json
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{91A98DCB-FA23-444B-865A-3734578F1C28}"
-	ProjectSection(SolutionItems) = preProject
-		.github\FUNDING.yml = .github\FUNDING.yml
-		.github\PULL_REQUEST_TEMPLATE.md = .github\PULL_REQUEST_TEMPLATE.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{B3C84CC9-D0F5-4D9F-93A8-D742A73F3674}"
-	ProjectSection(SolutionItems) = preProject
-		.github\workflows\build-and-test.yml = .github\workflows\build-and-test.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{07706BC0-CA04-4558-A005-3F9FA7D9933C}"
@@ -53,16 +39,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{F8DA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{8EDAC650-9105-421F-8988-E3AE6EDF77F7}"
 	ProjectSection(SolutionItems) = preProject
-		msbuild\props\SixLabors.Global.props = msbuild\props\SixLabors.Global.props
-		msbuild\props\SixLabors.Src.props = msbuild\props\SixLabors.Src.props
-		msbuild\props\SixLabors.Tests.props = msbuild\props\SixLabors.Tests.props
+		msbuild\props\FreeDotnet.Global.props = msbuild\props\FreeDotnet.Global.props
+		msbuild\props\FreeDotnet.Src.props = msbuild\props\FreeDotnet.Src.props
+		msbuild\props\FreeDotnet.Tests.props = msbuild\props\FreeDotnet.Tests.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "targets", "targets", "{A4111E2B-C16C-4029-92D0-A9F367AE1B20}"
 	ProjectSection(SolutionItems) = preProject
-		msbuild\targets\SixLabors.Global.targets = msbuild\targets\SixLabors.Global.targets
-		msbuild\targets\SixLabors.Src.targets = msbuild\targets\SixLabors.Src.targets
-		msbuild\targets\SixLabors.Tests.targets = msbuild\targets\SixLabors.Tests.targets
+		msbuild\targets\FreeDotnet.Global.targets = msbuild\targets\FreeDotnet.Global.targets
+		msbuild\targets\FreeDotnet.Src.targets = msbuild\targets\FreeDotnet.Src.targets
+		msbuild\targets\FreeDotnet.Tests.targets = msbuild\targets\FreeDotnet.Tests.targets
 	EndProjectSection
 EndProject
 Global
@@ -86,8 +72,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{1664B46A-D99F-4C66-9424-A3A17C926A4C} = {478B60EE-3651-4B39-83BD-528C428AC628}
 		{68A8CC40-6AED-4E96-B524-31B1158FDEEA} = {07706BC0-CA04-4558-A005-3F9FA7D9933C}
-		{91A98DCB-FA23-444B-865A-3734578F1C28} = {27502888-A75B-4BCB-8D19-C81198AEF7C7}
-		{B3C84CC9-D0F5-4D9F-93A8-D742A73F3674} = {91A98DCB-FA23-444B-865A-3734578F1C28}
 		{F8DA0585-5F98-48F6-9A68-5E26EDD3F1D4} = {27502888-A75B-4BCB-8D19-C81198AEF7C7}
 		{8EDAC650-9105-421F-8988-E3AE6EDF77F7} = {F8DA0585-5F98-48F6-9A68-5E26EDD3F1D4}
 		{A4111E2B-C16C-4029-92D0-A9F367AE1B20} = {F8DA0585-5F98-48F6-9A68-5E26EDD3F1D4}

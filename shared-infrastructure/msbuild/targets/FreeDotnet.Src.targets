@@ -7,14 +7,14 @@
 
   <ItemGroup>
     <!-- Shared config files that have to exist at root level. -->
-    <SixLaborsConfigFilesToCopy Include="$(MSBuildThisFileDirectory)..\..\.editorconfig;$(MSBuildThisFileDirectory)..\..\.gitattributes;$(MSBuildThisFileDirectory)..\..\codecov.yml;" />
+    <FreeDotnetConfigFilesToCopy Include="$(MSBuildThisFileDirectory)..\..\.editorconfig;$(MSBuildThisFileDirectory)..\..\.gitattributes;" />
   </ItemGroup>
 
   <!-- Copy the config files on src build. -->
-  <Target Name="SixLaborsCopyConfigFiles" BeforeTargets="Build" Condition="'$(SixLaborsDisableConfigCopy)' == ''">
-    <Copy SourceFiles="@(SixLaborsConfigFilesToCopy)"
+  <Target Name="FreeDotnetCopyConfigFiles" BeforeTargets="Build" Condition="'$(FreeDotnetDisableConfigCopy)' == ''">
+    <Copy SourceFiles="@(FreeDotnetConfigFilesToCopy)"
           SkipUnchangedFiles = "true"
-          DestinationFolder="$(SixLaborsSolutionDirectory)" />
+          DestinationFolder="$(FreeDotnetSolutionDirectory)" />
   </Target>
 
 </Project>

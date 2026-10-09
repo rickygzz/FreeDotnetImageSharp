@@ -3,10 +3,10 @@
 
   <!-- Compilation and build location settings. -->
   <PropertyGroup>
-    <SixLaborsProjectCategory>tests</SixLaborsProjectCategory>
+    <FreeDotnetProjectCategory>tests</FreeDotnetProjectCategory>
     <IsTestProject Condition="'$(IsTestProject)' == ''">true</IsTestProject>
     <IsPackable>false</IsPackable>
-    <CodeAnalysisRuleSet Condition="'$(CodeAnalysisRuleSet)' == ''">$(MSBuildThisFileDirectory)..\..\sixlabors.tests.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(CodeAnalysisRuleSet)' == ''">$(MSBuildThisFileDirectory)..\..\freedotnet.tests.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <!-- Package references and additional files which are consumed by test projects -->

@@ -12,16 +12,16 @@
 
   <PropertyGroup>
     <!-- This MUST be defined before importing props. -->
-    <SixLaborsSolutionDirectory>$(MSBuildThisFileDirectory)</SixLaborsSolutionDirectory>
+    <FreeDotnetSolutionDirectory>$(MSBuildThisFileDirectory)</FreeDotnetSolutionDirectory>
 
     <!-- For some reason Debug-InnerLoop doesn't define DEBUG by default. -->
     <DefineConstants Condition="'$(Configuration)' == 'Debug-InnerLoop'">$(DefineConstants);DEBUG</DefineConstants>
   </PropertyGroup>
 
   <!-- Import the shared global .props file -->
-  <Import Project="$(MSBuildThisFileDirectory)shared-infrastructure\msbuild\props\SixLabors.Global.props" />
+  <Import Project="$(MSBuildThisFileDirectory)shared-infrastructure\msbuild\props\FreeDotnet.Global.props" />
 
-  <PropertyGroup Condition="$(SIXLABORS_TESTING_PREVIEW) == true">
+  <PropertyGroup Condition="$(FREEDOTNET_TESTING_PREVIEW) == true">
     <!-- Workaround various issues bound to implicit language features. -->
     <LangVersion>10.0</LangVersion>
   </PropertyGroup>

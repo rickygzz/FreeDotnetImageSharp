@@ -2,7 +2,7 @@
 <Project>
 
   <!-- Import the shared src .props file -->
-  <Import Project="$(MSBuildThisFileDirectory)..\msbuild\props\SixLabors.Src.props"/>
+  <Import Project="$(MSBuildThisFileDirectory)..\msbuild\props\FreeDotnet.Src.props"/>
   
   <!-- Import the solution .props file. -->
   <Import Project="$(MSBuildThisFileDirectory)..\Directory.Build.props"/>

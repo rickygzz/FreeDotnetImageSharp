@@ -1,44 +1,27 @@
-# How to contribute to SixLabors.ImageSharp
+# Contributing to FreeDotnetImageSharp
 
-#### **Did you find a bug?**
+FreeDotnetImageSharp is a community-maintained fork of SixLabors.ImageSharp 2.1.13. Its goal is to keep the 2.1.x API available under the Apache License 2.0, with security and compatibility fixes.
 
-- Please **ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/SixLabors/ImageSharp/issues).
+## Scope
 
-- If you're unable to find an open issue addressing the problem, please [open a new one](https://github.com/SixLabors/ImageSharp/issues/new). Be sure to include a **title, the applicable version, a clear description**, as much relevant information as possible, and a **code sample** or an **executable test case** demonstrating the expected behavior that is not occurring. Please do not hijack existing issues.
+- Security fixes, bug fixes and dependency updates for the 2.1.x API are welcome.
+- New features are only accepted if they don't break binary compatibility. The assembly name (`SixLabors.ImageSharp`), assembly version (2.0.0.0) and public API stay the same, so the package remains a drop-in replacement.
 
-#### **Did you write a patch that fixes a bug?**
+## Licensing of contributions
 
-* Open a new GitHub pull request with the patch.
+- All contributions are licensed under the [Apache License 2.0](../LICENSE).
+- **Do not copy code from SixLabors.ImageSharp 3.x or later.** Those versions use the Six Labors Split License, which is not compatible with this project. Fixes for issues that were also fixed upstream must be written independently.
+- Keep the existing copyright headers in files you change. You may add your own line below them.
 
-* Ensure the PR description clearly describes the problem and solution. Include the relevant issue number if applicable.
+## Building and testing
 
-* Before submitting, please ensure that your code matches the existing coding patterns and practice as demonstrated in the repository. These follow strict Stylecop rules :cop:.
+```
+dotnet build -c Release
+dotnet test tests/ImageSharp.Tests/ImageSharp.Tests.csproj -c Release -f net6.0 -p:FREEDOTNET_TESTING_PREVIEW=true
+```
 
-#### **Do you intend to add a new feature or change an existing one?**
+The test images are stored in Git LFS. Run `git lfs pull` after cloning.
 
-* Suggest your change in the [Ideas Discussions Channel](https://github.com/SixLabors/ImageSharp/discussions?discussions_q=category%3AIdeas) and start writing code.
+## Reporting security issues
 
-* Do not open an issue on GitHub until you have collected positive feedback about the change. GitHub issues are primarily intended for bug reports and fixes.
-
-#### **Building**
-
- * When first cloning the repo, make sure to run `git submodule update --init --recursive` otherwise the submodules (e.g. `shared-infrastructure`) will be missing.
-
- * Run `dotnet build` in the root of the repo, or open the ImageSharp.sln file in Visual Studio and build from there.
-
-#### **Running tests and Debugging**
-
-* Expected test output is pulled in as a submodule from the [ImageSharp.Tests.Images repository](https://github.com/SixLabors/Imagesharp.Tests.Images/tree/main/ReferenceOutput). To succesfully run tests, make sure that you have updated the submodules!
-* Debugging (running tests in Debug mode) is only supported on .NET Core 2.1+, because of JIT Code Generation bugs like [dotnet/coreclr#16443](https://github.com/dotnet/coreclr/issues/16443) or [dotnet/coreclr#20657](https://github.com/dotnet/coreclr/issues/20657)
-
-#### **Do you have questions about consuming the library or the source code?**
-
-* Ask any question about how to use SixLabors.ImageSharp in the [Help Discussions Channel](https://github.com/SixLabors/ImageSharp/discussions?discussions_q=category%3AHelp).
-
-#### Code of Conduct  
-This project has adopted the code of conduct defined by the [Contributor Covenant](https://contributor-covenant.org/) to clarify expected behavior in our community.
-For more information, see the [.NET Foundation Code of Conduct](https://dotnetfoundation.org/code-of-conduct).
-
-And please remember. SixLabors.ImageSharp is the work of a very, very, small number of developers who struggle balancing time to contribute to the project with family time and work commitments. We encourage you to pitch in and help make our vision of simple accessible image processing available to all. Open Source can only exist with your help.
-
-Thanks for reading!
+Do not open a public issue. Use GitHub's private vulnerability reporting on this repository.

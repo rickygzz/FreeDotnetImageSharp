@@ -3,8 +3,8 @@
 
   <!-- Compilation and build location settings. -->
   <PropertyGroup>
-    <SixLaborsProjectCategory>src</SixLaborsProjectCategory>
-    <CodeAnalysisRuleSet Condition="'$(CodeAnalysisRuleSet)' == ''">$(MSBuildThisFileDirectory)..\..\sixlabors.ruleset</CodeAnalysisRuleSet>
+    <FreeDotnetProjectCategory>src</FreeDotnetProjectCategory>
+    <CodeAnalysisRuleSet Condition="'$(CodeAnalysisRuleSet)' == ''">$(MSBuildThisFileDirectory)..\..\freedotnet.ruleset</CodeAnalysisRuleSet>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 

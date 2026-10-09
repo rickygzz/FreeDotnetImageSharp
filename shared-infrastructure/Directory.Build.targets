@@ -11,6 +11,6 @@
   -->
 
   <!-- Import the global .targets file -->
-  <Import Project="$(SixLaborsSolutionDirectory)msbuild\targets\SixLabors.Global.targets"/>
+  <Import Project="$(FreeDotnetSolutionDirectory)msbuild\targets\FreeDotnet.Global.targets"/>
 
 </Project>

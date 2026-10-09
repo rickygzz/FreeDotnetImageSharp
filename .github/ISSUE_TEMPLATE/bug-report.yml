@@ -1,0 +1,33 @@
+name: Bug report
+description: Report a bug or a security-related problem in FreeDotnetImageSharp
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        FreeDotnetImageSharp is a community fork of ImageSharp 2.1.13. Please report issues with this package here, not to Six Labors.
+
+        **Security vulnerabilities:** do not open a public issue. Use [private vulnerability reporting](../../security/advisories/new) instead.
+  - type: input
+    attributes:
+      label: FreeDotnetImageSharp version
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Target framework and operating system
+      placeholder: e.g. net8.0 on Windows 11 x64
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Description
+      description: What happened, and what did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      description: A minimal code sample, and the image file if one is needed (zip it so it isn't recompressed).
+    validations:
+      required: true

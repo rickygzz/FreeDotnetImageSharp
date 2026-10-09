@@ -6,4 +6,4 @@
     System.Diagnostics.CodeAnalysis.SuppressMessage(
         "StyleCop.CSharp.MaintainabilityRules",
         "SA1413:UseTrailingCommasInMultiLineInitializers",
-        Justification = "Follows SixLabors.ruleset")]
+        Justification = "Follows freedotnet.ruleset")]

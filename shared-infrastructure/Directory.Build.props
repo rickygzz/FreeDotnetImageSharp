@@ -12,10 +12,10 @@
 
   <PropertyGroup>
     <!-- This MUST be defined before importing props. -->
-    <SixLaborsSolutionDirectory>$(MSBuildThisFileDirectory)</SixLaborsSolutionDirectory>
+    <FreeDotnetSolutionDirectory>$(MSBuildThisFileDirectory)</FreeDotnetSolutionDirectory>
   </PropertyGroup>
 
   <!-- Import the shared global .props file -->
-  <Import Project="$(SixLaborsSolutionDirectory)msbuild\props\SixLabors.Global.props"/>
+  <Import Project="$(FreeDotnetSolutionDirectory)msbuild\props\FreeDotnet.Global.props"/>
 
 </Project>

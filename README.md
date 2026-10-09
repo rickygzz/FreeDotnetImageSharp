@@ -24,109 +24,26 @@ Do not reference both `FreeDotnetImageSharp` and `SixLabors.ImageSharp` in the s
 
 This project is not affiliated with or endorsed by Six Labors. All credit for the original work goes to Six Labors and the ImageSharp contributors. Security fixes here are independent implementations; no code from ImageSharp 3.x or later (Six Labors Split License) is included. See [NOTICE](NOTICE).
 
-The original ImageSharp README follows.
+## About
 
----
+ImageSharp is a fully managed, cross-platform 2D graphics library for .NET. This fork targets .NET Framework 4.7.2, .NET Standard 2.0/2.1 and .NET Core 2.1/3.1, so it runs on any modern .NET version.
 
-<div align="center">
+The API is identical to ImageSharp 2.1.x. Documentation and samples written for ImageSharp 2.x apply unchanged. When reading upstream documentation, make sure it is for version 2.x, because 3.x and later changed parts of the API.
 
-[![Build Status](https://img.shields.io/github/workflow/status/SixLabors/ImageSharp/Build/main)](https://github.com/SixLabors/ImageSharp/actions)
-[![Code coverage](https://codecov.io/gh/SixLabors/ImageSharp/branch/main/graph/badge.svg)](https://codecov.io/gh/SixLabors/ImageSharp)
-[![License: Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Twitter](https://img.shields.io/twitter/url/http/shields.io.svg?style=flat&logo=twitter)](https://twitter.com/intent/tweet?hashtags=imagesharp,dotnet,oss&text=ImageSharp.+A+new+cross-platform+2D+graphics+API+in+C%23&url=https%3a%2f%2fgithub.com%2fSixLabors%2fImageSharp&via=sixlabors)
+## Building
 
-</div>
+```
+git lfs pull
+dotnet build -c Release
+dotnet test tests/ImageSharp.Tests/ImageSharp.Tests.csproj -c Release -f net6.0 -p:FREEDOTNET_TESTING_PREVIEW=true
+```
 
-### **ImageSharp** is a new, fully featured, fully managed, cross-platform, 2D graphics API. 
+The test images are stored in Git LFS, so `git lfs pull` is needed before running the tests.
 
-ImageSharp is a new, fully featured, fully managed, cross-platform, 2D graphics library. Designed to simplify image processing, ImageSharp brings you an incredibly powerful yet beautifully simple API.
+## Contributing
 
-ImageSharp is designed from the ground up to be flexible and extensible. The library provides API endpoints for common image processing operations and the building blocks to allow for the development of additional operations.
-
-Built against [.NET Standard 2.0](https://docs.microsoft.com/en-us/dotnet/standard/net-standard), ImageSharp can be used in device, cloud, and embedded/IoT scenarios.
-
+See [CONTRIBUTING.md](.github/CONTRIBUTING.md). Contributions must not include code from ImageSharp 3.x or later.
 
 ## License
-  
-- ImageSharp is licensed under the [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0)  
-- An alternative Six Labors License can be purchased **for projects and applications requiring developer support**.
-Please visit https://sixlabors.com/pricing for details.
 
-## Support Six Labors
-
-Support the efforts of the development of the Six Labors projects. 
- - [Purchase a Commercial Support License :heart:](https://sixlabors.com/pricing/)
- - [Become a sponsor via GitHub Sponsors :heart:]( https://github.com/sponsors/SixLabors)
- - [Become a sponsor via Open Collective :heart:](https://opencollective.com/sixlabors)
-
-## Documentation
-
-- [Detailed documentation](https://sixlabors.github.io/docs/) for the ImageSharp API is available. This includes additional conceptual documentation to help you get started.
-- Our [Samples Repository](https://github.com/SixLabors/Samples/tree/main/ImageSharp) is also available containing buildable code samples demonstrating common activities.
-
-## Questions
-
-- Do you have questions? We are happy to help! Simply purchase a [Six Labors License](https://sixlabors.com/pricing) for developer support. Please do not open issues for questions or misuse our [Discussions Forum](https://github.com/SixLabors/ImageSharp/discussions).
-- For feature ideas please [join our Discussions Forum](https://github.com/SixLabors/ImageSharp/discussions/categories/ideas) and we'll be happy to discuss.  
-- Please read our [Contribution Guide](https://github.com/SixLabors/ImageSharp/blob/main/.github/CONTRIBUTING.md) before opening issues or pull requests!
-
-## Code of Conduct  
-This project has adopted the code of conduct defined by the [Contributor Covenant](https://contributor-covenant.org/) to clarify expected behavior in our community.
-For more information, see the [.NET Foundation Code of Conduct](https://dotnetfoundation.org/code-of-conduct).
-
-## Installation 
-
-Install stable releases via Nuget; development releases are available via MyGet.
-
-| Package Name                   | Release (NuGet) | Nightly (MyGet) |
-|--------------------------------|-----------------|-----------------|
-| `SixLabors.ImageSharp`         | [![NuGet](https://img.shields.io/nuget/v/SixLabors.ImageSharp.svg)](https://www.nuget.org/packages/SixLabors.ImageSharp/) | [![MyGet](https://img.shields.io/myget/sixlabors/vpre/SixLabors.ImageSharp.svg)](https://www.myget.org/feed/sixlabors/package/nuget/SixLabors.ImageSharp) |
-
-## Manual build
-
-If you prefer, you can compile ImageSharp yourself (please do and help!)
-
-- Using [Visual Studio 2019](https://visualstudio.microsoft.com/vs/)
-  - Make sure you have the latest version installed
-  - Make sure you have [the .NET 5 SDK](https://www.microsoft.com/net/core#windows) installed
-
-Alternatively, you can work from command line and/or with a lightweight editor on **both Linux/Unix and Windows**:
-
-- [Visual Studio Code](https://code.visualstudio.com/) with [C# Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp)
-- [.NET Core](https://www.microsoft.com/net/core#linuxubuntu)
-
-To clone ImageSharp locally, click the "Clone in [YOUR_OS]" button above or run the following git commands:
-
-```bash
-git clone https://github.com/SixLabors/ImageSharp
-```
-
-If working with Windows please ensure that you have enabled long file paths in git (run as Administrator).
-
-```bash
-git config --system core.longpaths true
-```
-
-This repository uses [Git Large File Storage](https://docs.github.com/en/github/managing-large-files/installing-git-large-file-storage). Please follow the linked instructions to ensure you have it set up in your environment.
-
-This repository contains [Git Submodules](https://blog.github.com/2016-02-01-working-with-submodules/). To add the submodules to the project, navigate to the repository root and type:
-
-``` bash
-git submodule update --init --recursive
-```
-
-## How can you help?
-
-Please... Spread the word, contribute algorithms, submit performance improvements, unit tests, no input is too little. Make sure to read our [Contribution Guide](https://github.com/SixLabors/ImageSharp/blob/main/.github/CONTRIBUTING.md) before opening a PR.
-
-## The ImageSharp Team
-
-- [James Jackson-South](https://github.com/jimbobsquarepants)
-- [Dirk Lemstra](https://github.com/dlemstra)
-- [Anton Firsov](https://github.com/antonfirsov)
-- [Scott Williams](https://github.com/tocsoft)
-- [Brian Popow](https://github.com/brianpopow)
-
-
-
-
+Licensed under the [Apache License 2.0](LICENSE). See [NOTICE](NOTICE) and [THIRD-PARTY-NOTICES.TXT](THIRD-PARTY-NOTICES.TXT).

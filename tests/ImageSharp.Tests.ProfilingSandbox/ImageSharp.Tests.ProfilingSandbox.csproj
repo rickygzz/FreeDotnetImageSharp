@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <Choose>
-    <When Condition="$(SIXLABORS_TESTING_PREVIEW) == true">
+    <When Condition="$(FREEDOTNET_TESTING_PREVIEW) == true">
       <PropertyGroup>
         <TargetFrameworks>net6.0;net5.0;netcoreapp3.1;netcoreapp2.1;net472</TargetFrameworks>
       </PropertyGroup>

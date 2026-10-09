@@ -3,11 +3,11 @@
 
   <PropertyGroup>
     <!--Disable config copy. This solution only.-->
-    <SixLaborsDisableConfigCopy>true</SixLaborsDisableConfigCopy>
+    <FreeDotnetDisableConfigCopy>true</FreeDotnetDisableConfigCopy>
   </PropertyGroup>
 
   <!-- Import the shared tests .props file -->
-  <Import Project="$(MSBuildThisFileDirectory)..\msbuild\props\SixLabors.Tests.props"/>
+  <Import Project="$(MSBuildThisFileDirectory)..\msbuild\props\FreeDotnet.Tests.props"/>
   
   <!-- Import the solution .props file. -->
   <Import Project="$(MSBuildThisFileDirectory)..\Directory.Build.props"/>
