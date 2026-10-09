@@ -71,7 +71,7 @@ jobs:
         run: dotnet test tests/ImageSharp.Tests/ImageSharp.Tests.csproj --no-build -c Release -f ${{ matrix.framework }}
 
       - name: Export Failed Output
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: failure()
         with:
           name: actual_output_${{ matrix.framework }}
@@ -95,7 +95,7 @@ jobs:
         run: dotnet pack src/ImageSharp/ImageSharp.csproj -c Release -o artifacts/nupkg
 
       - name: Upload Package
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: FreeDotnetImageSharp-nupkg
           path: artifacts/nupkg/*.nupkg
