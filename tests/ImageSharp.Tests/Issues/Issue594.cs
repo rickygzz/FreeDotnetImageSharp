@@ -12,7 +12,11 @@ namespace SixLabors.ImageSharp.Tests.Issues
     {
         // This test fails for unknown reason in Release mode on linux and is meant to help reproducing the issue
         // see https://github.com/SixLabors/ImageSharp/issues/594
-        [Fact(Skip = "Skipped because of issue #594")]
+        // FreeDotnetImageSharp: still fails on every platform (net10.0, net8.0, net472) at the FromRgba32 assertion.
+        // The input bytes convert to values exactly halfway between two integers (e.g. alpha 39 -> -88.5), so the
+        // expected value depends on the rounding mode; ImageSharp consistently rounds the other way. The maintained
+        // NormalizedByte4Tests cover this pixel format. Short4 and NormalizedShort4 below pass again and are enabled.
+        [Fact(Skip = "Issue #594: expectation depends on rounding of exact .5 values; see comment above.")]
         public void NormalizedByte4()
         {
             // Test PackedValue
@@ -95,7 +99,7 @@ namespace SixLabors.ImageSharp.Tests.Issues
 
         // This test fails for unknown reason in Release mode on linux and is meant to help reproducing the issue
         // see https://github.com/SixLabors/ImageSharp/issues/594
-        [Fact(Skip = "Skipped because of issue #594")]
+        [Fact]
         public void NormalizedShort4()
         {
             // Test PackedValue
@@ -169,7 +173,7 @@ namespace SixLabors.ImageSharp.Tests.Issues
 
         // This test fails for unknown reason in Release mode on linux and is meant to help reproducing the issue
         // see https://github.com/SixLabors/ImageSharp/issues/594
-        [Fact(Skip = "Skipped because of issue #594")]
+        [Fact]
         public void Short4()
         {
             // Test the limits.
