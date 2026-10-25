@@ -42,7 +42,7 @@ jobs:
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
 
       - name: Git Setup LFS Cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: .git/lfs
           key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}-v1
@@ -58,7 +58,7 @@ jobs:
             10.0.x
 
       - name: NuGet Setup Cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/*.props', '**/*.targets') }}
